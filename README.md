@@ -1,13 +1,14 @@
-# README turtleSorts #
+# README Connect Four #
 
 Connect 4 game drawn with python turtle graphics
 2 player point and click game
 
 -----
 
-## Algorithms ##
+## Status ##
 
-| Procedure | Status|
-|-----------|:------:|
-| Game Board | Developing |
+| Task       |      Status|
+|----------- |  :--------:|
+| Game Board | Comlete    |
 | Animations | Developing |
+| Functionality | Developing |
