@@ -37,18 +37,29 @@ class Board:
         return None
 
     def assign(self,space,player):
-        assigned = self.column_bottom(space)
-        assigned.assign(player)
+        bottom = self.column_bottom(space)
+        col = bottom.dem2
+
         return assigned
 
-    def column_bottom(self,space):
-        col = [i for i in self.spaces.keys() if i[1] == space.dem2]
+    def drop(self,space,player):
+        col = [i for i in self.spaces if i[1] == space.dem2]
         bottom = (space.dem1,space.dem2)
-        for area in col:
-            temp = self.spaces[area]
+        for circ in col:
+            temp = self.spaces[circ]
             if temp.is_empty() and temp.dem1 > bottom[0]:
                 bottom = (temp.dem1,temp.dem2)
-        return self.spaces[bottom]
+        bottom_space = self.spaces[bottom]
+        self.drop_animation(bottom_space,player)
+        bottom_space.assign(player)
+        return bottom_space
+
+    def drop_animation(self,space,player):
+        for i in range(space.dem1):
+            key = (i,space.dem2)
+            empty = self.spaces[key]
+            empty.animate(player)
+        return
 
 class Space(RawTurtle):
 
@@ -67,6 +78,23 @@ class Space(RawTurtle):
         x,y = self.xy
         mid = x,y+self.radius
         return mid
+
+    def animate(self,player):
+        self.clear()
+        self.speed(11)
+        self.screen.tracer(1,5)
+        self.color(player.color)
+        self.down()
+        self.begin_fill()
+        self.circle(self.radius)
+        self.end_fill()
+        self.color("white")
+        self.begin_fill()
+        self.circle(self.radius)
+        self.end_fill()
+        self.screen.tracer(1,0)
+        return
+
 
     @classmethod
     def create(self,**kwargs):
@@ -87,6 +115,7 @@ class Space(RawTurtle):
         self.draw()
 
     def draw(self):
+        self.speed(11)
         self.color(self._color)
         self.down()
         self.begin_fill()

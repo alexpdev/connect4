@@ -16,28 +16,30 @@ class Player:
 
     def select_space(self,x,y):
         space = self.board.find_space(x,y)
-        if space and space.is_empty():
-            assigned = self.board.assign(space,self)
-            self.spaces.append(assigned)
-            self.game.turn_end()
-            return
+        return space
+
+    def drop_token(self,space):
+        bottom = self.board.drop(space,self)
+        self.spaces.append(bottom)
+        return
 
 class Game:
 
     def __init__(self,**kwargs):
         self.screen = kwargs["screen"]
         self.board = kwargs["board"]
-        self.players = kwargs["players"]
-        self.p1,self.p2 = self.players
+        self.p1 = kwargs["players"][0]
+        self.p2 = kwargs["players"][1]
         self.turn = 1
-        self.kwargs = kwargs
 
-    def play_turn(self):
-        if self.turn == 1:
-            player = self.p1
-        else:
-            player = self.p2
-        player.select_space()
+    def play(self,x,y):
+        if self.turn == 1: player = self.p1
+        else: player = self.p2
+        space = player.select_space(x,y)
+        if space and space.is_empty():
+            player.drop_token(space)
+            self.turn_end()
+        return
 
     def turn_end(self):
         if self.turn == 1:
@@ -49,6 +51,6 @@ class Game:
     def start(self):
         self.p1.game = self
         self.p2.game = self
-        func = self.playturn
+        func = self.play
         self.screen.onclick(func,1)
         self.screen.mainloop()
