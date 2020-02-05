@@ -10,5 +10,6 @@ Connect 4 game drawn with python turtle graphics
 | Task       |      Status|
 |----------- |  :--------:|
 | Game Board | Comlete    |
-| Animations | Developing |
-| Functionality | Developing |
+| Animations | Complete |
+| Functionality | Complete |
+| Determine Winner | Developing |
