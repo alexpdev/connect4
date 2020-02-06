@@ -21,10 +21,9 @@ class Player:
     def drop_token(self,space):
         bottom = self.board.drop(space,self)
         result = self.board.check_winner(bottom)
-        if result:
-            print("game over")
+        if result: return result
         self.spaces.append(bottom)
-        return
+        return None
 
 class Game:
 
@@ -33,6 +32,7 @@ class Game:
         self.board = kwargs["board"]
         self.p1 = kwargs["players"][0]
         self.p2 = kwargs["players"][1]
+        self.winner = None
         self.turn = 1
 
     def play(self,x,y):
@@ -40,9 +40,22 @@ class Game:
         else: player = self.p2
         space = player.select_space(x,y)
         if space and space.is_empty():
-            player.drop_token(space)
+            msg = player.drop_token(space)
+            if msg:
+                self.winner = player
+                self.draw_message(msg)
+                self.turn = 0
+                print(msg)
             self.turn_end()
         return
+
+    def draw_message(self,msg):
+        x,y = self.board.corners[0]
+        msg.st()
+        msg.goto(0,y+15)
+        msg.color("cyan")
+        msg.down()
+        msg.write("GAME OVER!",move=False,align="center",font=("Fira Code",25,"normal"))
 
     def turn_end(self):
         if self.turn == 1:
