@@ -1,5 +1,4 @@
 # -*- coding utf8 -*-
-# /env/bin/python
 from turtle import Screen,RawTurtle
 
 class Board:
@@ -36,11 +35,22 @@ class Board:
                     return space
         return None
 
-    def assign(self,space,player):
-        bottom = self.column_bottom(space)
-        col = bottom.dem2
+    def check_winner(self,bottom):
+        lst = [(1,0),(0,1),(1,1),(-1,1),(1,-1),(-1,-1),(-1,0),(0,-1)]
+        x,y = bottom.dem1,bottom.dem2
+        for i in lst:
+            if self.check_board(check,i,bottom.player) >= 4:
+                return True
+        return False
 
-        return assigned
+    def check_board(self,check,direction,player):
+        if check not in self.spaces:
+            return 0
+        pl = self.spaces[check]
+        if pl.player = player:
+            nxt = (check[0]+direction[0],check[1]+direction[1])
+            return 1 + self.check_board(nxt,direction,player)
+        return 0
 
     def drop(self,space,player):
         col = [i for i in self.spaces if i[1] == space.dem2]

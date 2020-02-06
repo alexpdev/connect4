@@ -1,4 +1,4 @@
-from setup import setup
+from setup import build
 from config import OPTIONS as kwargs
 
 game = setup(**kwargs)

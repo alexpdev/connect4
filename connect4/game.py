@@ -20,6 +20,9 @@ class Player:
 
     def drop_token(self,space):
         bottom = self.board.drop(space,self)
+        result = self.board.check_winner(bottom)
+        if result:
+            print("game over")
         self.spaces.append(bottom)
         return
 

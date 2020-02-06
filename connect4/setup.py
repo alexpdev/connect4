@@ -1,9 +1,9 @@
+from board import Board, Space
 from game import Player, Game
 from config import OPTIONS
-from board import Board,Space
 from turtle import Screen
 
-def setup(**kwargs):
+def build(**kwargs):
     game = get_screen(**kwargs)
     return game
 
